@@ -1,0 +1,42 @@
+% Copyright (c) Chris Granade.
+% Licensed under the MIT License.
+
+\documentclass[letterpaper]{quantumarticle}
+    \pdfoutput=1
+    \usepackage{tikz}
+    \usepackage[strict,uselistings]{revquantum}
+    \usepackage{qsharp}
+
+\newcommand{\figurefolder}{../fig}
+\newcommand{\sourcefolder}{../src}
+
+\begin{document}
+
+\title{Manuscript}
+\date{2019-08-23}
+
+\author{Author Author}
+    \affilTODO
+
+\begin{abstract}
+    \TODO
+\end{abstract}
+
+\maketitle
+
+\begin{acknowledgments}
+    This project was prepared using a reproducible workflow \cite{granade_reproducible_2017}.
+\end{acknowledgments}
+
+\nocite{apsrev41Control}
+\bibliographystyle{apsrev4-1}
+\bibliography{apsrev-control,bibliography}
+
+\appendix
+\onecolumngrid
+
+\section{Source Code}
+
+\lstinputlisting[style=qsharp]{\sourcefolder/Operations.qs}
+
+\end{document}
