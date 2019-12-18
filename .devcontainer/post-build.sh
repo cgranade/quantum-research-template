@@ -6,12 +6,14 @@
 cat << \EOF >> ~/.bashrc
 export DOTNET_ROOT="$HOME/.dotnet"
 export PATH="$DOTNET_ROOT/tools:$HOME/.local/bin:$PATH"
+alias python=python3.8
 EOF
 
 # Also apply changes to PATH immediately. We can't just source .bashrc,
 # as we are not in an interactive session.
 export DOTNET_ROOT="$HOME/.dotnet"
 export PATH="$DOTNET_ROOT/tools:$HOME/.local/bin:$PATH"
+alias python=python3.8
 
 # Print out some diagnostics before proceeding:
 echo "## Diagnostics ##"
