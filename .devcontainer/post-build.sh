@@ -2,17 +2,16 @@
 # Copyright (c) Chris Granade.
 # Licensed under the MIT License.
 
-curl -sSL https://dot.net/v1/dotnet-install.sh | bash /dev/stdin --version 2.2.401
-curl -sSL https://dot.net/v1/dotnet-install.sh | bash /dev/stdin --version 3.0.100
 # Add the appropriate paths to $PATH through the bash profile.
 cat << \EOF >> ~/.bashrc
 export DOTNET_ROOT="$HOME/.dotnet"
-export PATH="$DOTNET_ROOT:$DOTNET_ROOT/tools:$HOME/.local/bin:$PATH"
+export PATH="$DOTNET_ROOT/tools:$HOME/.local/bin:$PATH"
 EOF
+
 # Also apply changes to PATH immediately. We can't just source .bashrc,
 # as we are not in an interactive session.
 export DOTNET_ROOT="$HOME/.dotnet"
-export PATH="$DOTNET_ROOT:$DOTNET_ROOT/tools:$HOME/.local/bin:$PATH"
+export PATH="$DOTNET_ROOT/tools:$HOME/.local/bin:$PATH"
 
 # Print out some diagnostics before proceeding:
 echo "## Diagnostics ##"
