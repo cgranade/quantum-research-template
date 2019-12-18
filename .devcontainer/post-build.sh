@@ -23,7 +23,7 @@ echo "## /Diagnostics ##"
 # Install Python requirements.
 pip3 install --user notebook qsharp
 # Install required .NET Global Tools.
-dotnet tool install -g Microsoft.Quantum.IQSharp --version 0.10.1911.1607
+dotnet tool install -g Microsoft.Quantum.IQSharp --version 0.10.1912.501
 dotnet tool install -g PowerShell
 # Install project templates.
 dotnet new -i Microsoft.Quantum.ProjectTemplates
