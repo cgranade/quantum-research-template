@@ -3,10 +3,12 @@
 This template repository contains everything needed to quickly start working on a research project in quantum computing using Visual Studio Online from your browser or from Visual Studio Code.
 The devcontainer in this repository installs a full LaTeX compiler toolchain, as well as the .NET Core SDK and the Quantum Development Kit, making it easy to use Q# in your reproducible research papers.
 
+*See also the blog post at https://www.cgranade.com/blog/2019/12/22/reproducible-research-with-qsharp.html with more detail about how this template works and what you can do with it!*
+
 ## Getting Started ##
 
 1. **Make a new repository using this template.**
-   Go to https://github.com/microsoft/quantum-research-template/generate, provide a name for your new repository, and choose whether you'd like for your repository to be private or public.
+   Go to https://github.com/cgranade/quantum-research-template/generate, provide a name for your new repository, and choose whether you'd like for your repository to be private or public.
    This will make an entirely new repository from this template, ready for you to add your own research to.
 2. **Create and connect to a new Visual Studio Online environment for your repository.**
    Following the steps at https://docs.microsoft.com/en-us/visualstudio/online/quickstarts/browser, create a new Visual Studio Online environment, replacing `microsoft/vsonline-quickstart` with the name of the repository you created.
