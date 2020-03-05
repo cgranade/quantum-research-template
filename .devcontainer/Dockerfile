@@ -27,6 +27,9 @@ RUN apt-get update && \
 
 USER ${USER}
 
+# Add TeX Live to PATH.
+RUN echo "export PATH=\"\${TEXLIVE_BIN}:\$PATH\"" >> ~/.bashrc
+
 # Install required LaTeX usermode packages.
 RUN tlmgr init-usertree && \
     tlmgr --usermode install revquantum && \
