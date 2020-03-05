@@ -19,8 +19,10 @@ ENV PATH="${TEXLIVE_BIN}:${PATH}"
 RUN tlmgr install latexmk
 
 RUN apt-get update && \
-    # Upgrade .NET Core SDK to the LTS release.
-    apt-get install -y dotnet-sdk-3.1 && \
+                       # Upgrade .NET Core SDK to the LTS release.
+    apt-get install -y dotnet-sdk-3.1 \
+                       # Also install zip so that we can package things for arXiv.
+                       zip && \
     # We clean the apt cache at the end of each apt command so that the caches
     # don't get stored in each layer.
     apt-get clean && rm -rf /var/lib/apt/lists/
@@ -32,9 +34,22 @@ RUN echo "export PATH=\"\${TEXLIVE_BIN}:\$PATH\"" >> ~/.bashrc
 
 # Install required LaTeX usermode packages.
 RUN tlmgr init-usertree && \
-    tlmgr --usermode install revquantum && \
-    tlmgr --usermode install qsharp && \
-    tlmgr --usermode install quantumarticle
+    tlmgr --usermode install xkeyval \
+                             etoolbox \
+                             revtex \
+                             revtex4 \
+                             pgf \
+                             ms \
+                             xcolor \
+                             listings \
+                             braket \
+                             iftex \
+                             algorithms \
+                             float \
+                             caption \
+                             revquantum \
+                             qsharp \
+                             quantumarticle
 
 # Install PowerShell so that we can use posh-tex.
 RUN dotnet tool install --global PowerShell && \
