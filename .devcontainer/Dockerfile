@@ -19,6 +19,12 @@ RUN apt-get update && \
 
 USER ${USER}
 
+# Install required LaTeX packages.
+RUN tlmgr init-usertree && \
+    tlmgr install revquantum && \
+    tlmgr install qsharp && \
+    tlmgr install quantumarticle
+
 # Install PowerShell so that we can use posh-tex.
 RUN dotnet tool install --global PowerShell && \
     pwsh -Command "Install-Module -Force posh-tex"
