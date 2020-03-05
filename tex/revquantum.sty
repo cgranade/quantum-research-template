@@ -1,0 +1,445 @@
+%%
+%% This is file `revquantum.sty',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% revquantum.dtx  (with options: `package')
+%% 
+%% This is a generated file.
+%% 
+%% Copyright (C) 2015 by Christopher Granade <cgranade@cgranade.com>.
+%% 
+%% This file may be distributed and/or modified under the conditions of
+%% the LaTeX Project Public License, either version 1.3 of this license
+%% or (at your option) any later version.  The latest version of this
+%% license is in:
+%% 
+%%    http://www.latex-project.org/lppl.txt
+%% 
+%% and version 1.3 or later is part of all distributions of LaTeX version
+%% 2005/12/01 or later.
+%% 
+\NeedsTeXFormat{LaTeX2e}[1999/12/01]
+\ProvidesPackage{revquantum}
+    [2020/03/05 v0.13 Take hard dependency on iftex.]
+
+
+\usepackage{ifthen}
+
+
+
+
+
+\newboolean{@xetex}
+\setboolean{@xetex}{false}
+\RequirePackage{iftex}
+\ifXeTeX
+    \wlog{[INFO] Using XeTeX}
+    \setboolean{@xetex}{true}
+\else
+    \setboolean{@xetex}{false}
+\fi
+
+
+\newcommand{\newnew}[2]{
+    \expandafter\newcommand\csname new#1\endcsname[1]{
+      \expandafter\newcommand\csname ##1\endcsname{#2{##1}}
+    }
+}
+\newnew{operator}{\operatorname}
+\newnew{rm}{\mathrm}
+
+\newoperator{Tr}
+\newoperator{Cov}
+\newoperator{supp}
+\newoperator{diag}
+\newoperator{rank}
+
+\newcommand{\ii}{\mathrm{i}} % Outside what newnew currently supports.
+\newcommand{\dd}{\mathrm{d}} % Outside what newnew currently supports.
+
+\newrm{e}
+\newrm{TVD}
+\newrm{T}
+
+\newcommand{\defeq}{\mathrel{:=}}
+\newcommand{\expect}{\mathbb{E}}
+\newcommand{\id}{\openone}
+
+
+    \IfFileExists{stmaryrd.sty}{
+        \RequirePackage{stmaryrd}
+    }{
+        \PackageWarning{revquantum}{
+            The stmaryrd package is not available,
+            so some commands (e.g.: double-brackets) will look wrong.
+        }
+        \newcommand{\llbracket}{[\!\!\hspace{1.5pt}[}
+        \newcommand{\rrbracket}{]\!\!\hspace{1.5pt}]}
+    }
+
+
+\newcommand{\booloption}[3]{
+    \newboolean{#1}
+    \setboolean{#1}{#3}
+    \ifthenelse{\equal{#3}{true}}{
+        \DeclareOption{no#2}{\setboolean{#1}{false}}
+    }{
+        \DeclareOption{#2}{\setboolean{#1}{true}}
+    }
+}
+
+
+
+\booloption{@final}{final}{false}
+\booloption{@pretty}{pretty}{false}
+\booloption{@uselistings}{uselistings}{false}
+\booloption{@bibtexhacks}{bibtexhacks}{true}
+\booloption{@strict}{strict}{false}
+
+\ProcessOptions\relax
+
+
+
+\ifthenelse{\boolean{@strict}}{
+    \newcommand{\rq@quasiwarn}{
+        \PackageError{revquantum}
+    }
+}{
+    \newcommand{\rq@quasiwarn}{
+        \PackageWarning{revquantum}
+    }
+}
+
+
+
+
+\ifthenelse{\boolean{@bibtexhacks}}{\def\@bibdataout@aps{%
+ \immediate\write\@bibdataout{%
+  @CONTROL{%
+   apsrev41Control,author="08",editor="1",pages="0",title="0",year="1",eprint="1"%
+  }%
+ }%
+ \if@filesw
+  \immediate\write\@auxout{\string\citation{apsrev41Control}}%
+ \fi
+}}{}
+
+
+
+
+
+\RequirePackage{amsmath}
+\RequirePackage{amsfonts}
+\RequirePackage{amsthm}
+\RequirePackage{amssymb}
+\RequirePackage{amsbsy}
+\@ifpackageloaded{tikz}{}{%
+    \@ifpackageloaded{xcolor}{}{%
+        \ifthenelse{\boolean{@uselistings}}{}{%
+            \RequirePackage[usenames,dvipsnames]{color}%
+        }%
+    }%
+    \AtBeginDocument{%
+        \@ifpackageloaded{tikz}{%
+            \rq@quasiwarn{tikz loaded, but after revquantum. This may not work.}%
+        }%
+    }%
+}
+\RequirePackage{braket}
+\RequirePackage{graphicx}
+\RequirePackage[english]{babel}
+\ifthenelse{\boolean{@pretty}}{
+    \ifthenelse{\boolean{@xetex}}{
+        % http://tex.stackexchange.com/a/50593
+        \usepackage{fontspec}
+        \usepackage{mathpazo}
+        \setmainfont
+         [ BoldFont       = texgyrepagella-bold.otf ,
+           ItalicFont     = texgyrepagella-italic.otf ,
+           BoldItalicFont = texgyrepagella-bolditalic.otf ]
+         {texgyrepagella-regular.otf}
+    }{
+        \RequirePackage{mathpazo}
+    }
+}{}
+\ifthenelse{\boolean{@uselistings}}{
+    \RequirePackage{xcolor}
+    \RequirePackage{listings}
+    \RequirePackage{textcomp} % Make sure we have a ` for writing Mathematica.
+}{}
+\ifthenelse{\boolean{@bibtexhacks}}{
+    \RequirePackage{letltxmacro}
+    \RequirePackage{etoolbox}
+}{}
+
+
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+
+
+
+
+\RequirePackage{algorithm}
+\RequirePackage{algpseudocode}
+    \renewcommand{\algorithmicrequire}{\textbf{Input:}}
+    \renewcommand{\algorithmicensure}{\textbf{Output:}}
+    \newcommand{\inlinecomment}[1]{\Comment {\footnotesize #1} \normalsize}
+    \newcommand{\linecomment}[1]{\State \(\triangleright\) {\footnotesize #1} \normalsize}
+
+
+
+
+
+\ifthenelse{\boolean{@uselistings}}{
+    \definecolor{comment-color}{gray}{0.5}
+
+    \lstset{
+        basicstyle=\footnotesize,
+        commentstyle=\color{comment-color},
+        frame=lines,
+        gobble=4,
+        numbers=left,
+        numberstyle=\tiny, stepnumber=5,
+        numbersep=5pt,
+        keywordstyle=\color{cud-bluish-green!85!black}\bfseries,
+        keywordstyle={[2]\color{cud-sky-blue!75!black}},
+        emphstyle=\color{cud-vermillion}
+    }
+
+    \ifthenelse{\boolean{@xetex}}{
+        \RequirePackage{sourcecodepro}
+        \lstset{basicstyle=\footnotesize\sourcecodepro}
+    }{}
+
+    \lstdefinestyle{matlab}{
+        language=MATLAB,
+        mathescape=true
+    }
+
+    \lstdefinestyle{python}{
+        language=Python,
+        mathescape=true,
+        showstringspaces=false,
+        morekeywords={as,async,await}
+    }
+
+    \lstdefinestyle{mathematica}{
+        language=Mathematica,
+        upquote=true, % Needed to deal with the context symbol `.'
+        literate=
+            {->}{$\to$}1
+            {!=}{$\neq$}1
+            {\\[DoubleStruckOne]}{${\id}$}1
+            {\\[Sigma]}{$\sigma$}1
+            {(x)}{$\otimes$}1 % CG: I have the distinct impression this will break. Badly.
+    }
+}{}
+
+
+
+
+\newcommand{\rq@warnpackage}[1]{
+    \AtBeginDocument{%
+        \@ifpackageloaded{#1}{%
+            \rq@quasiwarn{The #1 package is known to be incompatible with revtex4-1. You may encounter problems using this package.}%
+        }{}
+    }
+}
+
+
+\rq@warnpackage{subcaption}
+
+
+
+
+\ifthenelse{\boolean{@bibtexhacks}}{
+    \LetLtxMacro{\ORIGselectlanguage}{\selectlanguage}
+    \DeclareRobustCommand{\selectlanguage}[1]{%
+      \@ifundefined{alias@\string#1}
+        {\ORIGselectlanguage{#1}}
+        {\begingroup\edef\x{\endgroup
+           \noexpand\ORIGselectlanguage{\@nameuse{alias@#1}}}\x}%
+    }
+}{}
+
+
+
+\newcommand{\definelanguagealias}[2]{%
+  \@namedef{alias@#1}{#2}%
+}
+
+
+
+\definelanguagealias{en}{english}
+\definelanguagealias{EN}{english}
+\definelanguagealias{English}{english}
+
+
+
+
+\ifthenelse{\boolean{@bibtexhacks}}{
+    % Ensure that the \doibase command is defined, just in case.
+    \providecommand{\doibase}{}
+    \renewcommand{\doibase}[1]{https://dx.doi.org/\ifdefempty{#1}{}{#1}}
+}{}
+
+
+
+
+
+\ifthenelse{\boolean{@final}}{
+    \newcommand{\todo}[1]{%
+        \PackageError{revquantum}{Unaddressed TODO}%
+        \rq@todo{#1}%
+    }
+}{
+    \newcommand{\todo}[1]{%
+        \PackageWarning{revquantum}{Unaddressed TODO}%
+        \rq@todo{#1}%
+    }
+}
+
+\ifthenelse{\boolean{@final}}{
+    \newcommand{\citeneed}{%
+        \PackageError{revquantum}{citation needed}%
+        \rq@todo{[citation needed]}%
+    }
+}{
+    \newcommand{\citeneed}{%
+        \PackageWarning{revquantum}{citation needed}%
+        \rq@todo{[citation needed]}%
+    }
+}
+\newcommand{\rq@todo}[1]{%
+    {\color{magenta} #1}%
+}
+\newcommand{\TODO}{\todo{TODO}}
+\newcommand{\todolist}[1]{\todo{
+    \begin{itemize}
+        #1
+    \end{itemize}
+}}
+
+
+
+\definecolor{cud-black}         {RGB}{0,0,0}
+\definecolor{cud-orange}        {RGB}{230,159,0}
+\definecolor{cud-sky-blue}      {RGB}{86,180,233}
+\definecolor{cud-bluish-green}  {RGB}{0,158,115}
+\definecolor{cud-yellow}        {RGB}{240,228,66}
+\definecolor{cud-blue}          {RGB}{0,114,178}
+\definecolor{cud-vermillion}    {RGB}{213,94,0}
+\definecolor{cud-reddish-purple}{RGB}{204,121,167}
+
+\newcommand{\newaffil}[2]{
+    \expandafter\newcommand\csname affil#1\endcsname{
+        \affiliation{
+            #2
+        }
+    }
+}
+
+\newaffil{TODO}{\TODO}
+
+
+\newaffil{EQuSUSyd}{
+    Centre for Engineered Quantum Systems,
+    University of Sydney,
+    Sydney, NSW, Australia
+}
+\newaffil{EQuSMacq}{
+    Centre for Engineered Quantum Systems,
+    Macquarie University,
+    Sydney, NSW, Australia
+}
+\newaffil{USydPhys}{
+    School of Physics,
+    University of Sydney,
+    Sydney, NSW, Australia
+}
+
+
+\newaffil{IQC}{
+    Institute for Quantum Computing,
+    University of Waterloo,
+    Waterloo, ON, Canada
+}
+\newaffil{UWPhys}{
+    Department of Physics,
+    University of Waterloo,
+    Waterloo, ON, Canada
+}
+
+\newaffil{UWPhysAstro}{
+    Department of Physics and Astronomy,
+    University of Waterloo,
+    Waterloo, ON, Canada
+}
+\newaffil{UWAMath}{
+    Department of Applied Mathematics,
+    University of Waterloo,
+    Waterloo, ON, Canada
+}
+\newaffil{UWChem}{
+    Department of Chemistry,
+    University of Waterloo,
+    Waterloo, ON, Canada
+}
+\newaffil{PI}{
+    Perimeter Institute for Theoretical Physics,
+    31 Caroline St. N,
+    Waterloo, Ontario, Canada N2L 2Y5
+}
+\newaffil{CIFAR}{
+    Canadian Institute for Advanced Research,
+    Toronto, ON, Canada
+}
+
+
+\newaffil{CQuIC}{
+    Center for Quantum Information and Control,
+    University of New Mexico,
+    Albuquerque, NM 87131-0001, USA
+}
+\newaffil{IBMTJW}{
+    IBM T. J. Watson Research Center,
+    Yorktown Heights, New York 10598, USA
+}
+\newaffil{MSRQuArC}{
+    Microsoft Research, Quantum Architectures and Computation Group,
+    Redmond, Washington 98052, USA
+}
+
+
+
+
+
+\RequirePackage[breaklinks=true]{hyperref}
+
+\hypersetup{
+  colorlinks   = true, %Colours links instead of ugly boxes
+  urlcolor     = blue, %Colour for external hyperlinks
+  linkcolor    = blue, %Colour of internal links
+  citecolor    = red %Colour of citations
+}
+
+
+
+\AtBeginDocument{%
+    \def\sectionautorefname{Section}%
+}
+\AtBeginDocument{%
+    \def\algorithmautorefname{Algorithm}%
+}
+\AtBeginDocument{%
+    \def\equationautorefname~#1\null{(#1)\null}%
+}
+\AtBeginDocument{%
+    \newcommand{\lemmaautorefname}{Lemma}%
+}
+\endinput
+%%
+%% End of file `revquantum.sty'.
