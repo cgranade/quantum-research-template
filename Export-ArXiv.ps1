@@ -19,6 +19,10 @@ Export-ArXivArchive -RunNotebooks @{
         
         "README.md" = "anc/";
         "LICENSE" = "anc/"
+
+        # Needed to make sure we include latest version
+        # of revquantum with iftex fix.
+        "tex/*.sty" = ".";
     };
     RenewCommands = @{
         "figurefolder" = "fig";

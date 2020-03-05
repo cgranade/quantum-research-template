@@ -47,7 +47,6 @@ RUN tlmgr init-usertree && \
                              algorithms \
                              float \
                              caption \
-                             revquantum \
                              qsharp \
                              quantumarticle
 
