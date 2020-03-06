@@ -45,6 +45,7 @@ RUN tlmgr init-usertree && \
                              braket \
                              iftex \
                              algorithms \
+                             algorithmicx \
                              float \
                              caption \
                              qsharp \
