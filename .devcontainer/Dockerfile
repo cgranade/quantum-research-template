@@ -2,7 +2,7 @@ FROM mcr.microsoft.com/quantum/iqsharp-base:0.11.2004.2825
 USER root
 
 # Use method at https://github.com/wmacevoy/latex-docker/blob/master/dockers/latex-base/Dockerfile to
-# get a TeX Live 2019 install not managed by apt.
+# get a TeX Live 2020 install not managed by apt.
 RUN wget http://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz; \
 	mkdir /install-tl-unx; \
 	tar -xvf install-tl-unx.tar.gz -C /install-tl-unx --strip-components=1; \
@@ -10,7 +10,7 @@ RUN wget http://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz; \
 	/install-tl-unx/install-tl -profile /install-tl-unx/texlive.profile; \
     rm -r /install-tl-unx; \
 	rm install-tl-unx.tar.gz
-ENV TEXLIVE_DIR="/usr/local/texlive/2019"
+ENV TEXLIVE_DIR="/usr/local/texlive/2020"
 ENV TEXLIVE_BIN="${TEXLIVE_DIR}/bin/x86_64-linux"
 ENV PATH="${TEXLIVE_BIN}:${PATH}"
 
