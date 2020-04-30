@@ -1,5 +1,4 @@
-FROM mcr.microsoft.com/quantum/iqsharp-base:0.10.2002.2610
-
+FROM mcr.microsoft.com/quantum/iqsharp-base:0.11.2004.2825
 USER root
 
 # Use method at https://github.com/wmacevoy/latex-docker/blob/master/dockers/latex-base/Dockerfile to
@@ -19,10 +18,7 @@ ENV PATH="${TEXLIVE_BIN}:${PATH}"
 RUN tlmgr install latexmk
 
 RUN apt-get update && \
-                       # Upgrade .NET Core SDK to the LTS release.
-    apt-get install -y dotnet-sdk-3.1 \
-                       # Also install zip so that we can package things for arXiv.
-                       zip && \
+    apt-get install -y zip && \
     # We clean the apt cache at the end of each apt command so that the caches
     # don't get stored in each layer.
     apt-get clean && rm -rf /var/lib/apt/lists/
@@ -33,7 +29,8 @@ USER ${USER}
 RUN echo "export PATH=\"\${TEXLIVE_BIN}:\$PATH\"" >> ~/.bashrc
 
 # Install required LaTeX usermode packages.
-RUN tlmgr init-usertree && \
+RUN which tlmgr && \
+    tlmgr init-usertree && \
     tlmgr --usermode install xkeyval \
                              etoolbox \
                              revtex \
